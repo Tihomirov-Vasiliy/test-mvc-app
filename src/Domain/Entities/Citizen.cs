@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Enums;
 
 namespace Domain.Entities
 {
@@ -8,7 +9,7 @@ namespace Domain.Entities
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public DateTime BirthDate { get; set; }
-        public string Gender { get; set; }
+        public Gender Gender { get; set; }
         public string RegistrationAddress { get; set; }
         public long Inn { get; set; }
         public long Snils { get; set; }
