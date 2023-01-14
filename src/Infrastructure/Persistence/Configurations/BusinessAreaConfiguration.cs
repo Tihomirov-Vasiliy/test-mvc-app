@@ -8,14 +8,11 @@ namespace Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<BusinessArea> builder)
         {
-            builder.Property(b => b.Id)
-                .HasColumnName("id");
-
-            builder.Property(b=>b.Name)
-                .IsRequired()
+            builder.Property(b => b.Name)
+                .HasMaxLength(100)
                 .HasColumnName("name");
 
-            builder.ToTable("business_areas");
+            builder.ToTable("t_business_areas");
         }
     }
 }
