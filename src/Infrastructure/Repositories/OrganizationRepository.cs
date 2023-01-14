@@ -21,7 +21,7 @@ namespace Infrastructure.Repositories
             return await _context.Organizations
                 .Include(o => o.BusinessArea)
                 .Include(o => o.Ceo)
-                .OrderBy(o => o.BusinessArea.Name)
+                .OrderBy(o => o.Id) 
                 .AsNoTracking()
                 .ToListAsync();
         }

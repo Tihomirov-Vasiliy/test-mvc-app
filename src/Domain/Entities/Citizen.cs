@@ -19,5 +19,13 @@ namespace Domain.Entities
         /// Snils contains 11 digits
         /// </summary>
         public long Snils { get; set; }
+
+        public string GetFio()
+        {
+            if (MiddleName != null)
+                return $"{LastName} {FirstName} {MiddleName}";
+
+            return $"{LastName} {FirstName}";
+        }
     }
 }
