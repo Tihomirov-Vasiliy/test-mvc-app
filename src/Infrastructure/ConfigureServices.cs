@@ -1,4 +1,6 @@
-﻿using Infrastructure.Persistence;
+﻿using Application.Interfaces.Repositories;
+using Infrastructure.Persistence;
+using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -11,9 +13,9 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(configuration.GetConnectionString("DbConnection")));
 
-            //services.AddScoped<IBusinessAreaRepository, BusinessAreaRepository>();
-            //services.AddScoped<ICitizenRepository, CitizenRepository>();
-            //services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+            services.AddScoped<IBusinessAreaRepository, BusinessAreaRepository>();
+            services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+            services.AddScoped<ApplicationDbContextInitializer>();
 
             return services;
         }

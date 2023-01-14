@@ -9,8 +9,17 @@ namespace Domain.Entities
         public BusinessArea BusinessArea { get; set; }
         public Citizen Ceo { get; set; }
         public long AuthorizedCapital { get; set; }
-        public long Inn { get; set; } //10 digits
-        public long Kpp { get; set; } //9 digits
-        public long Ogrn { get; set; } //13 digits
+        /// <summary>
+        /// Inn contains 10 digits for organizations
+        /// </summary>
+        public long Inn { get; set; } 
+        /// <summary>
+        /// Kpp contains 9 digits
+        /// </summary>
+        public long Kpp { get; set; }
+        /// <summary>
+        /// Ogrn contains 13 digits
+        /// </summary>
+        public long Ogrn { get; set; } 
     }
 }

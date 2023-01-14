@@ -10,16 +10,16 @@ namespace Infrastructure.Persistence
         public DbSet<BusinessArea> BusinessAreas { get; set; }
         public DbSet<Citizen> Citizens { get; set; }
         public DbSet<Organization> Organizations { get; set; }
-        /*public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
 
-        }*/
-
+        }
+        /*
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
                 .UseNpgsql("User ID=MvcUser;Password=password;Host=localhost;Port=5432;Database=MvcDatabase;");
-        }
+        }*/
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

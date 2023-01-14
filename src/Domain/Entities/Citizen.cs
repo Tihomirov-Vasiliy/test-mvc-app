@@ -11,7 +11,13 @@ namespace Domain.Entities
         public DateTime BirthDate { get; set; }
         public Gender Gender { get; set; }
         public string RegistrationAddress { get; set; }
-        public long Inn { get; set; } //12 digits
-        public long Snils { get; set; } //11 digits
+        /// <summary>
+        /// Inn contains 12 digits for citizen
+        /// </summary>
+        public long Inn { get; set; }
+        /// <summary>
+        /// Snils contains 11 digits
+        /// </summary>
+        public long Snils { get; set; }
     }
 }
