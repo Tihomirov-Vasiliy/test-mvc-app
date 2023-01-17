@@ -6,8 +6,9 @@ namespace Domain.Entities
     {
         public string FullName { get; set; }
         public string ShortName { get; set; }
-        public BusinessArea BusinessArea { get; set; }
-        public Citizen Ceo { get; set; }
+        public BusinessArea? BusinessArea { get; set; }
+        public string FioCeo { get; set; }
+        //public Citizen Ceo { get; set; }
         public long AuthorizedCapital { get; set; }
         /// <summary>
         /// Inn contains 10 digits for organizations

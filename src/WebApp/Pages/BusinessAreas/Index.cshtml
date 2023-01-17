@@ -1,0 +1,57 @@
+﻿@page
+@model WebApp.Pages.BusinessAreas.IndexModel
+@{
+    ViewData["Title"] = "Сферы деятельности";
+}
+<h1>Сферы деятельности компаний:</h1>
+
+@if (Model.BusinessAreas == null || Model.BusinessAreas.Count() == 0)
+{
+    <h2 class="text-center">Сферы деятельности не найдены :(</h2>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col" class="w-75">Название</th>
+                <th scope="col" class="w-25">Команды урпавления</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.BusinessAreas)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>
+                        <button type="button" class="btn btn-primary update" data-id="@item.Id" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Редактировать
+                        </button>
+                        <div class="update-model-place">
+                        </div>
+                        <button type="button" class="btn btn-primary delete" data-id="@item.Id" data-toggle="modal" data-bs-target="#delete-modal">
+                            Удалить
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<div class="text-center">
+    <button type="button" class="btn btn-primary create" data-toggle="modal" data-target="#create-modal">
+        Добавить сферу деятельности
+    </button>
+</div>
+
+@section scripts{
+    <script>
+        $("button.update").click(function (e) {
+            event.preventDefault();
+            $(".update-model-place").load('BusinessAreas?handler=BusinessAreaUpdateModal&id=' + $(this).data('id'))
+        }
+        );
+    </script>
+    <partial name="_ValidationScriptsPartial" />
+
+}

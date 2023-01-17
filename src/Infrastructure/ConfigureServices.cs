@@ -11,7 +11,9 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString("DbConnection")));
+                options.UseNpgsql(configuration.GetConnectionString("DbConnection"))
+                .UseSnakeCaseNamingConvention()
+                .LogTo(Console.WriteLine));
 
             services.AddScoped<IBusinessAreaRepository, BusinessAreaRepository>();
             services.AddScoped<IOrganizationRepository, OrganizationRepository>();

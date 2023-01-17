@@ -19,6 +19,7 @@ namespace Infrastructure.Repositories
         {
             return await _context.BusinessAreas
                 .AsNoTracking()
+                .OrderBy(b => b.Id)
                 .ToListAsync();
         }
 
@@ -34,6 +35,9 @@ namespace Infrastructure.Repositories
             if (businessArea == null)
                 throw new ArgumentNullException("Сфера деятельности не может быть пустой. Создание отменено.");
 
+            if (_context.BusinessAreas.Any(b => b.Name == businessArea.Name))
+                throw new QniqueValueException($"Сфера деятельности с таким именем существует, попробуйте другое имя");
+
             _context.BusinessAreas.Add(businessArea);
             await _context.SaveChangesAsync();
 
@@ -46,8 +50,7 @@ namespace Infrastructure.Repositories
 
             ValueValidator.IdValueGreaterThanZero(businessArea.Id);
 
-            BusinessArea currentBusinessArea = await GetByIdAsync(businessArea.Id);
-            if (currentBusinessArea == null)
+            if (!_context.BusinessAreas.Any(b => b.Id == businessArea.Id))
                 throw new NotFoundException($"Сфера деятельности с Id: {businessArea.Id} не найдена. Обновление отменено.");
 
             _context.BusinessAreas.Update(businessArea);

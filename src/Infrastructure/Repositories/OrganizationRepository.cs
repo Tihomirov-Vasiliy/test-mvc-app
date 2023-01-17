@@ -18,12 +18,12 @@ namespace Infrastructure.Repositories
 
         public async Task<IEnumerable<Organization>> GetAllAsync()
         {
-            return await _context.Organizations
+            //as no tracking ???
+            var result = await _context.Organizations
                 .Include(o => o.BusinessArea)
-                .Include(o => o.Ceo)
-                .OrderBy(o => o.Id) 
-                .AsNoTracking()
+                .OrderBy(o => o.Id)
                 .ToListAsync();
+            return result;
         }
 
         public async Task<Organization> GetByIdAsync(int id)
@@ -32,7 +32,6 @@ namespace Infrastructure.Repositories
 
             return await _context.Organizations
                 .Include(o => o.BusinessArea)
-                .Include(o => o.Ceo)
                 .FirstOrDefaultAsync(o => o.Id == id);
         }
 
@@ -53,9 +52,14 @@ namespace Infrastructure.Repositories
 
             ValueValidator.IdValueGreaterThanZero(organization.Id);
 
-            Organization currentOrganization = await GetByIdAsync(organization.Id);
-            if (currentOrganization == null)
+            if (!_context.Organizations.Any(o => o.Id == organization.Id))
                 throw new NotFoundException($"Организация с Id: {organization.Id} не найдена. Обновление отменено.");
+            _context.Attach(organization);
+            if (organization.BusinessArea.Id == 0)
+            {
+                _context.Entry(organization.BusinessArea).State = EntityState.Detached;
+                organization.BusinessArea = null;
+            }
 
             _context.Organizations.Update(organization);
             await _context.SaveChangesAsync();

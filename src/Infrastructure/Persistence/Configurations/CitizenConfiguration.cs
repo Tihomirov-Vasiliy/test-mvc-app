@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configurations
 {
+    /*
     public class CitizenConfiguration : IEntityTypeConfiguration<Citizen>
     {
         public void Configure(EntityTypeBuilder<Citizen> builder)
@@ -33,5 +34,5 @@ namespace Infrastructure.Persistence.Configurations
 
             builder.ToTable("t_citizens");
         }
-    }
+    }*/
 }

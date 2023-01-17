@@ -1,0 +1,144 @@
+﻿@page
+@model WebApp.Pages.Organizations.IndexModel
+
+<h1>Организации сгруппированные по сферам деятельности</h1>
+
+@if (Model.BusinessAreasWithOrganizations == null || Model.BusinessAreasWithOrganizations.Count == 0)
+{
+    <h2 class="text-center">Организации не найдены :(</h2>
+}
+else
+{
+    @foreach (var businessArea in Model.BusinessAreasWithOrganizations)
+    {
+        <h2 class="mt-4">
+            @businessArea.Name
+        </h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Полное наименование</th>
+                    <th>Краткое наименование</th>
+                    <th>ФИО директора</th>
+                    <th>Уставной капитал</th>
+                    <th>ИНН</th>
+                    <th>КПП</th>
+                    <th>ОГРН</th>
+                    <th>Команды урпавления</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var organization in businessArea.Organizations)
+                {
+                    string updateId = $"#updateModal{organization.Id}";
+                    string updateIdModal = $"updateModal{organization.Id}";
+                    string deleteId = $"#deleteModal{organization.Id}";
+                    string deleteIdModal = $"deleteModal{organization.Id}";
+                    <tr>
+                        <td>@organization.FullName</td>
+                        <td>@organization.ShortName</td>
+                        <td>@organization.FioCeo</td>
+                        <td>@organization.AuthorizedCapital</td>
+                        <td>@organization.Inn</td>
+                        <td>@organization.Kpp</td>
+                        <td>@organization.Ogrn</td>
+                        <td>
+                            <!-- Редактирование -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="@updateId">
+                                Редактировать
+                            </button>
+                            <div class="modal fade" id="@updateIdModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <form method="post">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="updateModalLabel">Измените значения и подтвердите изменения</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <label class="form-label">Сфера деятельности</label>
+                                                <select class="form-select" asp-for="Organization.BusinessArea.Id" asp-items="Model.SelectedBusinessAreas">
+                                                    <option value="">-- Без сферы деятельности --</option>
+                                                </select>
+                                                <input type="number" asp-for="Organization.Id" class="visually-hidden" value="@organization.Id" />
+                                                <label for="textName" class="form-label">Фамилия директора</label>
+                                                <input type="text" asp-for="Organization.FioCeo" class="form-control" value="@organization.FioCeo" />
+                                                <label for="textName" class="form-label">Полное наименование</label>
+                                                <input type="text" asp-for="Organization.FullName" class="form-control" value="@organization.FullName" />
+                                                <label for="textName" class="form-label">Краткое наименование</label>
+                                                <input type="text" asp-for="Organization.ShortName" class="form-control" value="@organization.ShortName" />
+                                                <label for="textName" class="form-label">Уставной капитал</label>
+                                                <input type="text" asp-for="Organization.AuthorizedCapital" class="form-control" value="@organization.AuthorizedCapital" />
+                                                <label for="textName" class="form-label">ИНН</label>
+                                                <input type="text" asp-for="Organization.Inn" class="form-control" value="@organization.Inn" />
+                                                <label for="textName" class="form-label">КПП</label>
+                                                <input type="text" asp-for="Organization.Kpp" class="form-control" value="@organization.Kpp" />
+                                                <label for="textName" class="form-label">ОГРН</label>
+                                                <input type="text" asp-for="Organization.Ogrn" class="form-control" value="@organization.Ogrn" />
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отменить</button>
+                                                <button type="submit" asp-page-handler="Update" class="btn btn-danger">Изменить</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Удаление -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="@deleteId">
+                                Удалить
+                            </button>
+                            <div class="modal fade" id="@deleteIdModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <form method="post">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="deleteModalLabel">Подтвердите удаление</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Вы действительно хотите удалить сферу деятельности @organization.FullName?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет</button>
+                                                <button type="submit" asp-page-handler="Delete" asp-route-id="@organization.Id" class="btn btn-danger">Да</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+@*
+    <!-- Добавление -->
+<div class="text-center">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+        Добавить сферу деятельности
+    </button>
+</div>
+<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createModalLabel">Добавление сферы деятельности</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label for="textName" class="form-label">Наименование</label>
+                    <input type="text" asp-for="BusinessAreaCreateDto.Name" class="form-control" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отменить</button>
+                    <button type="submit" class="btn btn-danger">Добавить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+*@

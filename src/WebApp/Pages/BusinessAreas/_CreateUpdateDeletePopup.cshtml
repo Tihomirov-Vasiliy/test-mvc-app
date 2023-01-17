@@ -1,0 +1,74 @@
+﻿@using Domain.Entities;
+@model BusinessArea
+@*Модалка*@
+@*
+    Если Post - то поля пустые и asp-page-handler = "Post"
+    Если Update - то поля заполняются через GetById() и asp-page-handler = "Update"
+    Если Delete - то в body вопрос Вы действительно хотите удалить сферу деятельности @item.Name? и asp-page-handler = "Delete", asp-route-id="@item.Id"
+*@
+@*Update*@
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalLabel">Измените значения и подтвердите изменения</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="number" class="visually-hidden" value="@Model.Id" />
+                    <label for="textName" class="form-label">Наименование</label>
+                    <input type="text" class="form-control" value="@Model.Name" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отменить</button>
+                    <button type="submit" asp-page-handler="Update" class="btn btn-danger">Изменить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@*
+   <!--Delete-->
+<div class="modal fade" id="delete-modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Подтвердите удаление</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Вы действительно хотите удалить сферу деятельности @item.Name?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет</button>
+                    <button type="submit" asp-page-handler="Delete" asp-route-id="@item.Id" class="btn btn-danger">Да</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Create-->
+<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createModalLabel">Добавление сферы деятельности</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label for="textName" class="form-label">Наименование</label>
+                    <input type="text" asp-for="BusinessArea.Name" class="form-control" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отменить</button>
+                    <button type="submit" class="btn btn-danger">Добавить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+*@

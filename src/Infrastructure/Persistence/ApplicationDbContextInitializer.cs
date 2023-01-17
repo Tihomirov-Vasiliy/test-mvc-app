@@ -21,7 +21,7 @@ namespace Infrastructure.Persistence
         public async Task TrySeedAsync()
         {
             if (!_context.Organizations.Any() &&
-                !_context.Citizens.Any() &&
+                //!_context.Citizens.Any() &&
                 !_context.BusinessAreas.Any())
             {
                 Citizen ceo1 = new Citizen()
@@ -53,7 +53,7 @@ namespace Infrastructure.Persistence
                 {
                     BusinessArea = businessArea1,
                     Inn = 1010101010,
-                    Ceo = ceo1,
+                    FioCeo = "Иванов Иван Иванович",
                     AuthorizedCapital = 1_000_000L,
                     FullName = "\'ООО\' Цветы в каждый дом",
                     ShortName = "Цветы в каждый дом",
@@ -64,7 +64,7 @@ namespace Infrastructure.Persistence
                 {
                     BusinessArea = businessArea2,
                     Inn = 1010101010,
-                    Ceo = ceo2,
+                    FioCeo = "Петрова Дарья Петровна",
                     AuthorizedCapital = 1_000_000L,
                     FullName = "\'ООО\' Плавильня",
                     ShortName = "Плавильня",

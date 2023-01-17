@@ -8,7 +8,7 @@ namespace Infrastructure.Persistence
     public class ApplicationDbContext : DbContext
     {
         public DbSet<BusinessArea> BusinessAreas { get; set; }
-        public DbSet<Citizen> Citizens { get; set; }
+        //public DbSet<Citizen> Citizens { get; set; }
         public DbSet<Organization> Organizations { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -18,7 +18,8 @@ namespace Infrastructure.Persistence
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
-                .UseNpgsql("User ID=MvcUser;Password=password;Host=localhost;Port=5432;Database=MvcDatabase;");
+                .UseNpgsql("User ID=MvcUser;Password=password;Host=localhost;Port=5432;Database=MvcDatabase;")
+                .UseSnakeCaseNamingConvention();
         }*/
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
